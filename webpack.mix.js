@@ -18,7 +18,12 @@ mix
     .browserSync({
         proxy: 'http://icinn.test:89',
         browser: 'google chrome',
-        port: 3013
+        port: 3013,
+        files: [
+            'css/{*,**/*}.css',
+            'index.html',
+            'istituto.html'
+        ]
     })
     .webpackConfig(webpack => {
         return {

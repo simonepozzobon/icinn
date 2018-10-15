@@ -44,3 +44,37 @@
 .cls-7 {
   opacity: 0.63;
 }
+
+// override main font
+body, p {
+  font-size: 1.3rem;
+}
+
+
+body, p, li, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+html {
+  transition: $transition-base;
+}
+
+@include media-breakpoint-down('md') {
+  html {
+    font-size: 80%;
+    transition: $transition-base;
+  }
+}
+
+@include media-breakpoint-down('sm') {
+  html {
+    font-size: 80%;
+    transition: $transition-base;
+  }
+
+  .container {
+    padding: $spacer * 2;
+  }
+}
