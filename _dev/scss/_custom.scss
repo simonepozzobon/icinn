@@ -78,3 +78,7 @@ html {
     padding: $spacer * 2;
   }
 }
+
+.no-hyphens {
+  hyphens: none;
+}
