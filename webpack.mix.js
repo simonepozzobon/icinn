@@ -16,7 +16,7 @@ mix
         extensions: ['html']
     })
     .browserSync({
-        proxy: 'http://icinn.test:89',
+        proxy: 'http://icinn.test',
         browser: 'google chrome',
         port: 3013,
         files: [
