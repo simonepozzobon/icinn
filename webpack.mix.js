@@ -3,6 +3,7 @@ require('laravel-mix-purgecss')
 
 mix
     .sass('_dev/scss/app.scss', 'css')
+    .js('_dev/js/app.js', 'js')
     // .extract(['jquery', 'tether', 'bootstrap'])
     // .autoload({
     //     jquery: ['$', 'jQuery', 'jquery'],
@@ -20,16 +21,16 @@ mix
         browser: 'google chrome',
         port: 3013,
         files: [
-            'css/{*,**/*}.css',
+            'js/{*,**/*}.*',
+            'css/{*,**/*}.*',
             'index.html',
-            'istituto.html'
         ]
     })
     .webpackConfig(webpack => {
         return {
             resolve: {
                 alias: {
-                    'styles': path.resolve(__dirname, 'resources/sass'),
+                    'styles': path.resolve(__dirname, '_dev/scss'),
                     '_js': path.resolve(__dirname, 'resources/js'),
                     'node_modules': path.resolve(__dirname, 'node_modules'),
                 }

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e;
+cd /Users/esse/admin-ui
+npm link # create a global symlink to the local "viking" project
+cd /Users/esse/icinn
+npm link @esserun/admin-ui # create a symlink locally to global viking symlink
+# voila! now we can develop the two projects side-by-side without   # having to worry about publishing either of them
