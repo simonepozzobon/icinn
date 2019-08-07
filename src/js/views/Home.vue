@@ -9,16 +9,29 @@
                 color="primary"
                 :has-container="false"
                 :has-margin="false"
+                @click="createArticle"
             />
             <a-input
                 placeholder="cerca..."
                 :is-simple="true"
                 class="admin-top-bar__search"
+                @update="updateFilter"
             />
         </div>
     </a-container>
     <a-container :has-gradient="true">
-
+        <b-table
+            striped
+            hover
+            :fields="fields"
+            :items="items"
+        ></b-table>
+        <b-pagination
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            align="center"
+        />
     </a-container>
 </div>
 </template>
@@ -26,6 +39,33 @@
 <script>
 export default {
     name: 'Home',
+    data: function () {
+        return {
+            currentPage: 0,
+            perPage: 10,
+            totalRows: 0,
+            items: [{
+                id: 1,
+                title: 'titolo',
+                content: '',
+                img: '/img/img.jpg'
+            }],
+            fields: [{
+                key: 'title',
+                label: 'Titolo',
+                sortable: true
+            }, {
+                key: 'tools',
+                label: '',
+                sortable: false
+            }]
+        }
+    },
+    methods: {
+        updateFilter: function (value) {
+            this.filter = value
+        }
+    },
 }
 </script>
 
