@@ -2,53 +2,37 @@
 <div id="app">
     <classic-layout ref="layout">
         <template slot="logo">
-            Pannello
+            Pannello di amministrazione
         </template>
         <template slot="menu">
-            <ui-button
+            <a-button
                 title="logout"
+                size="sm"
                 :has-container="false"
                 :has-margin="false"
-                color="primary"
+                color="light"
             />
         </template>
         <template slot="sidebar">
-            Gianni
+            <a-sidebar-item
+                title="Articoli"
+                @click="$root.goTo('articoli')"
+            />
         </template>
         <template slot="content">
-            <container :has-gradient="true">
-                ciao
-            </container>
+            <router-view />
         </template>
     </classic-layout>
 </div>
 </template>
 
 <script>
-import {
-    ClassicLayout,
-    Container,
-    UiButton,
-}
-from '@esserun/admin-ui/packages/admin-ui'
-
-
-
 export default {
     name: 'Init',
-    components: {
-        ClassicLayout,
-        Container,
-        UiButton,
-    },
-    mounted: function () {
-        this.$nextTick(() => {
-            this.$refs.layout.randomColor()
-        })
-    },
+    mounted: function () {},
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~styles/shared';
 </style>

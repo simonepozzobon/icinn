@@ -2,8 +2,8 @@ const mix = require('laravel-mix')
 require('laravel-mix-purgecss')
 
 mix
-    .sass('_dev/scss/app.scss', 'css')
-    .js('_dev/js/app.js', 'js')
+    .sass('src/scss/app.scss', 'dist/css')
+    .js('src/js/app.js', 'dist/js')
     // .extract(['jquery', 'tether', 'bootstrap'])
     // .autoload({
     //     jquery: ['$', 'jQuery', 'jquery'],
@@ -13,7 +13,7 @@ mix
         globs: [
             path.join(__dirname, 'index.html'),
         ],
-        folders: ['_dev'],
+        folders: ['src'],
         extensions: ['html']
     })
     .browserSync({
@@ -21,6 +21,7 @@ mix
         browser: 'google chrome',
         port: 3013,
         files: [
+            'dist/{*,**/*}.*',
             'js/{*,**/*}.*',
             'css/{*,**/*}.*',
             'index.html',
@@ -30,8 +31,8 @@ mix
         return {
             resolve: {
                 alias: {
-                    'styles': path.resolve(__dirname, '_dev/scss'),
-                    '_js': path.resolve(__dirname, 'resources/js'),
+                    'styles': path.resolve(__dirname, 'src/scss'),
+                    '_js': path.resolve(__dirname, 'src/js'),
                     'node_modules': path.resolve(__dirname, 'node_modules'),
                 }
             },
