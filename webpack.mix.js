@@ -1,9 +1,26 @@
 const mix = require('laravel-mix')
 require('laravel-mix-purgecss')
 
+// const mix = require('laravel-mix');
+//
+// /*
+//  |--------------------------------------------------------------------------
+//  | Mix Asset Management
+//  |--------------------------------------------------------------------------
+//  |
+//  | Mix provides a clean, fluent API for defining some Webpack build steps
+//  | for your Laravel application. By default, we are compiling the Sass
+//  | file for the application as well as bundling up all the JS files.
+//  |
+//  */
+//
+// mix.js('resources/js/app.js', 'public/js')
+//     .sass('resources/sass/app.scss', 'public/css');
+
+
 mix
-    .sass('src/scss/app.scss', 'dist/css')
-    .js('src/js/app.js', 'dist/js')
+    .sass('resources/scss/app.scss', 'public/css')
+    .js('resources/js/admin/app.js', 'public/js')
     // .extract(['jquery', 'tether', 'bootstrap'])
     // .autoload({
     //     jquery: ['$', 'jQuery', 'jquery'],
@@ -21,9 +38,9 @@ mix
         browser: 'google chrome',
         port: 3013,
         files: [
-            'dist/{*,**/*}.*',
-            'js/{*,**/*}.*',
-            'css/{*,**/*}.*',
+            'resources/{*,**/*}.*',
+            'public/{*,**/*}.*',
+            'app/{*,**/*}.*',
             'index.html',
         ]
     })
@@ -31,8 +48,8 @@ mix
         return {
             resolve: {
                 alias: {
-                    'styles': path.resolve(__dirname, 'src/scss'),
-                    '_js': path.resolve(__dirname, 'src/js'),
+                    'styles': path.resolve(__dirname, 'resources/scss'),
+                    '_js': path.resolve(__dirname, 'resources/js'),
                     'node_modules': path.resolve(__dirname, 'node_modules'),
                 }
             },
