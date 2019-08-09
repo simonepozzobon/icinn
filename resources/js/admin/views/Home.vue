@@ -23,15 +23,45 @@
         <b-table
             striped
             hover
+            sortable
             :fields="fields"
             :items="items"
-        ></b-table>
-        <!-- <b-pagination
+            :filter="filter"
+            :current-page="currentPage"
+            :per-page="perPage"
+            @filtered="onFiltered"
+        >
+            <template
+                slot="tools"
+                slot-scope="data"
+            >
+                <div class="admin-table-tools">
+                    <a-button
+                        class="admin-table-tool"
+                        title="Modifica"
+                        theme="outline"
+                        size="sm"
+                        color="orange"
+                        :has-container="false"
+                        :has-margin="false"
+                    />
+                    <a-button
+                        title="Elimina"
+                        theme="outline"
+                        size="sm"
+                        color="red"
+                        :has-container="false"
+                        :has-margin="false"
+                    />
+                </div>
+            </template>
+        </b-table>
+        <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
             :per-page="perPage"
             align="center"
-        /> -->
+        />
     </a-container>
 </div>
 </template>
@@ -41,7 +71,8 @@ export default {
     name: 'Home',
     data: function () {
         return {
-            currentPage: 0,
+            filter: null,
+            currentPage: 1,
             perPage: 10,
             totalRows: 0,
             items: [{
@@ -51,14 +82,20 @@ export default {
                 img: '/img/img.jpg'
             }],
             fields: [{
-                key: 'title',
-                label: 'Titolo',
-                sortable: true
-            }, {
-                key: 'tools',
-                label: '',
-                sortable: false
-            }]
+                    key: 'id',
+                    label: 'ID',
+                    sortable: true,
+                },
+                {
+                    key: 'title',
+                    label: 'Titolo',
+                    sortable: true
+                }, {
+                    key: 'tools',
+                    label: '',
+                    sortable: false
+                }
+            ]
         }
     },
     methods: {
@@ -66,6 +103,7 @@ export default {
             this.$http.get('/api/admin/articles').then(response => {
                 if (response.data.success) {
                     this.items = response.data.articles
+                    console.log(this.items[0]);
                 }
             })
         },
@@ -74,6 +112,10 @@ export default {
         },
         createArticle: function () {
             console.log('create');
+        },
+        onFiltered: function (filteredItems) {
+            this.totalRows = filteredItems.length
+            this.currentPage = 1
         },
     },
     created: function () {
@@ -93,5 +135,15 @@ export default {
         margin-left: auto;
         max-width: 200px;
     }
+}
+
+.admin-table-tools {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.admin-table-tool {
+    margin-right: $spacer;
 }
 </style>

@@ -71,7 +71,11 @@ const Utility = {
         else {
             return false
         }
-    }
+    },
+    isDataURL: function (s) {
+        const regexp = /^data:((?:\w+\/(?:(?!;).)+)?)((?:;[\w\W]*?[^;])*),(.+)$/
+        return !!s.match(regexp)
+    },
 }
 
 export default Utility

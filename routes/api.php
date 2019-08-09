@@ -23,6 +23,10 @@ Route::prefix('admin')->group(function() {
         Route::post('update', 'Admin\UploadController@save_to_db');
     });
 
+    Route::prefix('images')->group(function() {
+        Route::post('upload', 'Admin\UploadController@upload_image');
+    });
+
     Route::prefix('articles')->group(function() {
         Route::get('/', 'Admin\ArticleController@get_articles');
         Route::post('update', 'Admin\ArticleController@update');
