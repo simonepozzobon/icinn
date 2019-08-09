@@ -20,7 +20,9 @@
             />
         </template>
         <template slot="content">
-            <router-view />
+            <div class="admin-padding container">
+                <router-view />
+            </div>
         </template>
     </classic-layout>
 </div>
@@ -35,4 +37,8 @@ export default {
 
 <style lang="scss">
 @import '~styles/shared';
+
+.admin-padding {
+    padding: $spacer;
+}
 </style>

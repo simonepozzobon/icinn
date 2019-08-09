@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import axios from 'axios'
 import App from './App.vue'
 import Routes from './routes'
 import BootstrapVue from 'bootstrap-vue'
@@ -13,6 +14,8 @@ for (let componentName in AdminUi) {
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
+Vue.prototype.$http = axios
+
 Vue.config.productionTips = false
 
 const router = new VueRouter({

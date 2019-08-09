@@ -33,7 +33,6 @@ export default {
     },
     watch: {
         '$root.objectsLoaded': function (count) {
-            console.log(count);
             let percent = Math.floor(count * 100 / (this.$root.objectsToLoad - 1))
             if (percent > 100) {
                 this.value = 100
@@ -62,7 +61,6 @@ export default {
     },
     methods: {
         init: function () {
-            console.log('init');
             let el = this.$refs.menu
             let master = new TimelineMax({
                 paused: true
@@ -100,7 +98,6 @@ export default {
         }
     },
     mounted: function () {
-        console.log('mounted');
         this.$nextTick(this.init)
     },
 }

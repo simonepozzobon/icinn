@@ -18,6 +18,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('admin')->group(function() {
-    Route::post('upload-file', 'Admin\UploadController@upload_file');
-    Route::post('update-db', 'Admin\UploadController@save_to_db');
+    Route::prefix('files')->group(function() {
+        Route::post('upload', 'Admin\UploadController@upload_file');
+        Route::post('update', 'Admin\UploadController@save_to_db');
+    });
+
+    Route::prefix('articles')->group(function() {
+        Route::get('/', 'Admin\ArticleController@get_articles');
+        Route::post('update', 'Admin\ArticleController@update');
+    });
 });

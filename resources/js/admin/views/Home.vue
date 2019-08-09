@@ -62,12 +62,22 @@ export default {
         }
     },
     methods: {
+        getData: function () {
+            this.$http.get('/api/admin/articles').then(response => {
+                if (response.data.success) {
+                    this.items = response.data.articles
+                }
+            })
+        },
         updateFilter: function (value) {
             this.filter = value
         },
         createArticle: function () {
             console.log('create');
         },
+    },
+    created: function () {
+        this.getData()
     },
 }
 </script>

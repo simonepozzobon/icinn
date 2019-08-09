@@ -277,7 +277,7 @@ export default {
             }, false)
 
             request.responseType = 'json'
-            request.open('POST', '/api/admin/upload-file')
+            request.open('POST', '/api/admin/files/upload')
             request.onload = () => {
                 let response = request.response
                 if (response.success) {
@@ -291,7 +291,7 @@ export default {
 
 
             request.responseType = 'json'
-            request.open('POST', '/api/admin/update-db')
+            request.open('POST', '/api/admin/files/update')
 
             request.onprogress = () => {
                 this.progressValue = 95

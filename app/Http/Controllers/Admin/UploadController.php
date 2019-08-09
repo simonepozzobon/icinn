@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
-
-    // salvare il file
-    // inserirlo nel database
-    // collegarlo all articolo
-
-
     public function upload_file(Request $request)
     {
         Cache::forget('file');
