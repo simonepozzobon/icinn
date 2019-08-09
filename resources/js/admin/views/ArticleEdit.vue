@@ -68,6 +68,7 @@
             />
             <a-text-editor
                 ref="editor"
+                class="article-text-editor"
                 @update="setContent"
             />
             <a-panel-title
@@ -347,5 +348,14 @@ export default {
         margin-right: $spacer;
     }
 
+}
+</style>
+
+<style lang="scss">
+@import '~styles/shared';
+.article-text-editor {
+    p {
+        font-size: $font-size-base !important;
+    }
 }
 </style>
