@@ -9,7 +9,7 @@
                 color="primary"
                 :has-container="false"
                 :has-margin="false"
-                @click="$root.goTo('article-edit')"
+                @click="$root.goTo('article-create')"
             />
             <a-input
                 placeholder="cerca..."
@@ -44,6 +44,7 @@
                         color="orange"
                         :has-container="false"
                         :has-margin="false"
+                        @click="editArticle(data.item)"
                     />
                     <a-button
                         title="Elimina"
@@ -103,7 +104,6 @@ export default {
             this.$http.get('/api/admin/articles').then(response => {
                 if (response.data.success) {
                     this.items = response.data.articles
-                    console.log(this.items[0]);
                 }
             })
         },
@@ -112,6 +112,11 @@ export default {
         },
         createArticle: function () {
             console.log('create');
+        },
+        editArticle: function (article) {
+            this.$root.goToWithParams('article-edit', {
+                id: article.id
+            })
         },
         onFiltered: function (filteredItems) {
             this.totalRows = filteredItems.length

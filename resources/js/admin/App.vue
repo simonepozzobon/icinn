@@ -1,5 +1,7 @@
 <template>
 <div id="app">
+    <!-- <full-loader v-if="$root.objectsToLoad > 0" /> -->
+    <full-loader />
     <classic-layout ref="layout">
         <template slot="logo">
             Pannello di amministrazione
@@ -29,8 +31,12 @@
 </template>
 
 <script>
+import FullLoader from './components/FullLoader.vue'
 export default {
     name: 'Init',
+    components: {
+        FullLoader,
+    },
     mounted: function () {},
 }
 </script>

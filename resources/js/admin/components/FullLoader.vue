@@ -47,7 +47,9 @@ export default {
         value: function (value) {
             // console.log('counter', value);
             if (value >= 100) {
-                this.destroyLoader()
+                this.$nextTick(() => {
+                    this.destroyLoader()
+                })
             }
         }
     },
@@ -78,12 +80,9 @@ export default {
                 scaleY: 1,
                 autoAlpha: 1,
                 ease: Power4.easeIn,
-                // onComplete: () => {
-                //     master.kill()
-                // }
             }, .2)
             master.progress(1).progress(0)
-            // master.play()
+            master.play()
         },
         destroyLoader: function () {
             let master = TweenMax.fromTo(this.$refs.menu, .5, {
@@ -92,6 +91,7 @@ export default {
                 delay: 1,
                 autoAlpha: 0,
                 onComplete: () => {
+                    this.$root.$emit('load-complete')
                     // console.log('completo', this.$refs.menu);
                 }
             })
@@ -121,13 +121,13 @@ export default {
     &__progress {
         width: 50%;
         height: $spacer * 1.618;
-        @include box-shadows(lighten($black, 10));
+        @include box-shadows(lighten($gray-600, 10));
     }
 
     &__bar {
         color: $white;
         padding: $spacer / 2;
-        @include gradient-directional(lighten($primary, 10), lighten($primary, 0), 125deg);
+        @include gradient-directional(lighten($teal, 0), darken($teal, 5), 125deg);
     }
 }
 </style>

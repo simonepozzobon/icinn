@@ -1,6 +1,5 @@
 <template>
 <div class="admin-article-edit">
-    <full-loader />
     <a-container
         :has-gradient="true"
         class="article-panel"
@@ -8,7 +7,7 @@
         <div class="article-panel__top">
             <div class="article-panel__title">
                 <a-title
-                    title="Nuovo Articolo"
+                    :title="panelTitle"
                     tag="h2"
                     font-size="h3"
                     :has-padding="false"
@@ -42,7 +41,11 @@
                 :has-margin="false"
                 :has-padding="false"
             />
-            <a-datepicker @update="setDate" />
+            <a-datepicker
+                placeholder="Seleziona una data"
+                :initial="initialDate"
+                @update="setDate"
+            />
             <a-panel-title
                 title="Titolo"
                 color="lightest-gray"
@@ -51,7 +54,8 @@
                 :has-padding="false"
             />
             <a-input
-                placeholder="Titolo..."
+                placeholder="Inserisci un titolo"
+                :initial="initial.title"
                 @update="setTitle"
             />
 
@@ -98,19 +102,23 @@
 
 <script>
 import ArticleUploads from '../components/ArticleUploads.vue'
-import FullLoader from '../components/FullLoader.vue'
 import Test from '../components/Test.vue'
 import Utility from '../Utilities'
 import mime from 'mime-types'
+import moment from 'moment'
 
 export default {
     name: 'ArticleEdit',
     components: {
         ArticleUploads,
-        FullLoader,
     },
     data: function () {
         return {
+            initial: {
+                title: null,
+                date: null,
+                content: null,
+            },
             form: {
                 date: null,
                 title: null,
@@ -119,9 +127,73 @@ export default {
             },
             json: null,
             isSaving: false,
+            initialDate: null,
         }
     },
+    watch: {
+        initial: function (obj) {
+            if (obj.content) {
+                this.setInitialEditor()
+            }
+
+            if (obj.date) {
+                this.setInitialDate()
+            }
+        },
+    },
+    computed: {
+        isEdit: function () {
+            if (this.$route.params && this.$route.params.hasOwnProperty('id')) {
+                return true
+            }
+            return false
+        },
+        articleId: function () {
+            if (this.isEdit) {
+                return Number(this.$route.params.id)
+            }
+            return null
+        },
+        editor: function () {
+            if (this.$refs.editor) {
+                return this.$refs.editor.editor
+            }
+            return null
+        },
+        panelTitle: function () {
+            if (this.isEdit) {
+                return 'Modifica Articolo'
+            }
+            return 'Crea Articolo'
+        },
+    },
     methods: {
+        getInitialData: function () {
+            let url = '/api/admin/articles/' + this.articleId
+            this.$http.get(url).then(response => {
+                if (response.data.success) {
+                    let article = response.data.article
+                    this.initial = article
+                    this.form = article
+                }
+            }).catch(err => {
+                this.$root.goTo('articoli')
+            })
+        },
+        setInitialEditor: function () {
+            if (this.isEdit && this.editor) {
+                this.editor.setContent(this.initial.content, true)
+                this.$nextTick(() => {
+                    this.$root.objectsLoaded++
+                })
+            }
+        },
+        setInitialDate: function () {
+            if (this.isEdit) {
+                this.initialDate = new Date(this.initial.date)
+                this.$root.objectsLoaded++
+            }
+        },
         setDate: function (date) {
             this.form.date = date
         },
@@ -197,10 +269,13 @@ export default {
         save: async function () {
             this.isSaving = true
 
+            this.$root.objectsToLoad = 2
+
             // verifica se ci sono immagini nel contenuto
             if (this.json) {
                 let editor = this.$refs.editor.editor
                 let formattedJson = await this.checkForImages(this.json)
+                this.$root.objectsLoaded++
                 editor.setContent(formattedJson, true)
 
                 this.$nextTick(() => {
@@ -208,6 +283,7 @@ export default {
                 })
             }
             else {
+                this.$root.objectsLoaded++
                 this.sendRequest()
             }
         },
@@ -226,15 +302,23 @@ export default {
 
             this.$http.post('/api/admin/articles/update', data).then(response => {
                 console.log(response.data);
+                this.$root.objectsLoaded++
                 this.$nextTick(() => {
                     this.isSaving = false
                 })
             }).catch(errs => {
+                this.$root.objectsLoaded++
                 this.$nextTick(() => {
                     this.isSaving = false
                 })
             })
         },
+    },
+    created: function () {
+        if (this.isEdit) {
+            this.$root.objectsToLoad = 2
+            this.getInitialData()
+        }
     },
 }
 </script>

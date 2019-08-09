@@ -29,6 +29,7 @@ Route::prefix('admin')->group(function() {
 
     Route::prefix('articles')->group(function() {
         Route::get('/', 'Admin\ArticleController@get_articles');
+        Route::get('/{id}', 'Admin\ArticleController@get_article');
         Route::post('update', 'Admin\ArticleController@update');
     });
 });

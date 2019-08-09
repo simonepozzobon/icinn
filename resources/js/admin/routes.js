@@ -1,3 +1,4 @@
+import ArticleContainer from './views/ArticleContainer.vue'
 import ArticleEdit from './views/ArticleEdit.vue'
 import Home from './views/Home.vue'
 
@@ -8,8 +9,18 @@ const Routes = [{
     },
     {
         path: '/articolo',
-        name: 'article-edit',
-        component: ArticleEdit,
+        component: ArticleContainer,
+        children: [{
+                path: '',
+                name: 'article-create',
+                component: ArticleEdit,
+            },
+            {
+                path: ':id',
+                name: 'article-edit',
+                component: ArticleEdit,
+            }
+        ],
     }
 ]
 

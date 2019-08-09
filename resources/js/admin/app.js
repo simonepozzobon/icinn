@@ -37,7 +37,21 @@ const admin = new Vue({
             this.$router.push({
                 name: name
             })
-        }
+        },
+        goToWithParams: function (name, params) {
+            if (this.$route.name != name) {
+                this.$router.push({
+                    name: name,
+                    params: params
+                })
+            }
+        },
+    },
+    created: function () {
+        this.$on('load-complete', () => {
+            this.objectsToLoad = 0
+            this.objectsLoaded = 0
+        })
     },
     mounted: function () {},
     render: h => h(App)

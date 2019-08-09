@@ -13,4 +13,4 @@
 
 Route::get('/{slug?}', function ($slug = null) {
     return view('welcome');
-});
+})->where('slug', '[\/\w\.-]*');

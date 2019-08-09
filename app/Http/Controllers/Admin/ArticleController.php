@@ -21,6 +21,16 @@ class ArticleController extends Controller
         ];
     }
 
+    public function get_article($id)
+    {
+        $article = Article::findOrFail($id);
+
+        return [
+            'success' => true,
+            'article' => $article,
+        ];
+    }
+
     public function update(Request $request)
     {
         if (isset($request->id) && $request->id && $request->id != 'null') {
