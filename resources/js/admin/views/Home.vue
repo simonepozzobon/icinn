@@ -53,6 +53,7 @@
                         color="red"
                         :has-container="false"
                         :has-margin="false"
+                        @click="confirmDelete(data.item)"
                     />
                 </div>
             </template>
@@ -64,24 +65,29 @@
             align="center"
         />
     </a-container>
+    <confirm-delete
+        ref="modal"
+        :item="this.selected"
+        @destroy="destroyArticle"
+    />
 </div>
 </template>
 
 <script>
+import ConfirmDelete from '../components/ConfirmDelete.vue'
+
 export default {
     name: 'Home',
+    components: {
+        ConfirmDelete,
+    },
     data: function () {
         return {
             filter: null,
             currentPage: 1,
             perPage: 10,
             totalRows: 0,
-            items: [{
-                id: 1,
-                title: 'titolo',
-                content: '',
-                img: '/img/img.jpg'
-            }],
+            items: [],
             fields: [{
                     key: 'id',
                     label: 'ID',
@@ -96,7 +102,8 @@ export default {
                     label: '',
                     sortable: false
                 }
-            ]
+            ],
+            selected: null
         }
     },
     methods: {
@@ -122,10 +129,31 @@ export default {
             this.totalRows = filteredItems.length
             this.currentPage = 1
         },
+        confirmDelete: function (item) {
+            this.selected = item
+            this.$nextTick(() => {
+                this.$refs.modal.show()
+            })
+        },
+        destroyArticle: function (id) {
+            let url = '/api/admin/articles/' + id
+            this.$http.delete(url).then(response => {
+                this.$refs.modal.hide()
+                this.$nextTick(() => {
+                    this.selected = null
+
+                    let idx = this.items.findIndex(item => item.id == id)
+                    if (idx > -1) {
+                        this.items.splice(idx, 1)
+                    }
+                })
+            })
+        },
     },
     created: function () {
         this.getData()
     },
+    mounted: function () {},
 }
 </script>
 

@@ -13,7 +13,7 @@ class ArticleController extends Controller
 {
     public function get_articles()
     {
-        $articles = Article::all();
+        $articles = Article::with('files')->get();
 
         return [
             'success' => true,
@@ -23,7 +23,19 @@ class ArticleController extends Controller
 
     public function get_article($id)
     {
+        $article = Article::with('files')->findOrFail($id);
+
+        return [
+            'success' => true,
+            'article' => $article,
+        ];
+    }
+
+    public function destroy_article($id)
+    {
         $article = Article::findOrFail($id);
+        $article->files()->detach();
+        $article->delete();
 
         return [
             'success' => true,
@@ -46,6 +58,23 @@ class ArticleController extends Controller
         $article->content = $request->content;
         $article->save();
 
+        if (isset($request->attacched) && $request->attacched) {
+            $files = json_decode($request->attacched, true);
+
+            $debug = [];
+
+            $article->files()->detach();
+
+            foreach ($files as $key => $id) {
+                $file = File::find($id);
+
+                if ($file) {
+                    $article->files()->attach($file);
+                }
+                array_push($debug, $file);
+            }
+
+        }
         return [
             'success' => true,
             'test' => $request->all(),

@@ -1,7 +1,7 @@
 <template>
 <div id="app">
     <!-- <full-loader v-if="$root.objectsToLoad > 0" /> -->
-    <full-loader />
+    <!-- <full-loader /> -->
     <classic-layout ref="layout">
         <template slot="logo">
             Pannello di amministrazione

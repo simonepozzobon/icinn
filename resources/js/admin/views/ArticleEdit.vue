@@ -78,7 +78,11 @@
                 :has-margin="false"
                 :has-padding="false"
             />
-            <article-uploads @uploaded="setFiles" />
+            <article-uploads
+                :initial="initialFiles"
+                @removed="removeFile"
+                @uploaded="setFiles"
+            />
         </div>
         <div class="article-panel__actions">
             <a-button
@@ -119,6 +123,7 @@ export default {
                 title: null,
                 date: null,
                 content: null,
+                files: [],
             },
             form: {
                 date: null,
@@ -129,17 +134,16 @@ export default {
             json: null,
             isSaving: false,
             initialDate: null,
+            initialFiles: [],
         }
     },
     watch: {
         initial: function (obj) {
-            if (obj.content) {
-                this.setInitialEditor()
-            }
-
-            if (obj.date) {
-                this.setInitialDate()
-            }
+            this.setInitialEditor().then(() => {
+                this.setInitialDate().then(() => {
+                    this.setInitialFiles()
+                })
+            })
         },
     },
     computed: {
@@ -169,31 +173,72 @@ export default {
         },
     },
     methods: {
+        debug: function () {
+            this.form.files = [1, 2, 3, 5]
+        },
         getInitialData: function () {
             let url = '/api/admin/articles/' + this.articleId
             this.$http.get(url).then(response => {
                 if (response.data.success) {
                     let article = response.data.article
                     this.initial = article
-                    this.form = article
+                    this.form = {
+                        ...this.form,
+                        ...article
+                    }
                 }
+
+                this.debug()
             }).catch(err => {
                 this.$root.goTo('articoli')
             })
         },
+        setInitialFiles: function () {
+            return new Promise((resolve, reject) => {
+                if (this.isEdit) {
+                    let files = this.initial.files
+                    for (let i = 0; i < files.length; i++) {
+                        let uuid = Utility.uuid()
+                        let newFile = {
+                            ...files[i],
+                            uuid: uuid,
+                            mime: 'application/pdf',
+                            src: files[i].url
+                        }
+                        this.initialFiles.push(newFile)
+                    }
+                    resolve()
+                }
+                else {
+                    resolve()
+                }
+            })
+        },
         setInitialEditor: function () {
-            if (this.isEdit && this.editor) {
-                this.editor.setContent(this.initial.content, true)
-                this.$nextTick(() => {
-                    this.$root.objectsLoaded++
-                })
-            }
+            return new Promise((resolve, reject) => {
+                if (this.isEdit) {
+                    this.editor.setContent(this.initial.content, true)
+                    this.$nextTick(() => {
+                        this.$root.objectsLoaded++
+                        resolve()
+                    })
+                }
+                else {
+                    resolve()
+                }
+            })
         },
         setInitialDate: function () {
-            if (this.isEdit) {
-                this.initialDate = new Date(this.initial.date)
-                this.$root.objectsLoaded++
-            }
+            return new Promise((resolve, reject) => {
+                if (this.isEdit) {
+                    this.initialDate = new Date(this.initial.date)
+                    this.$root.objectsLoaded++
+                    resolve()
+                }
+                else {
+                    resolve()
+                }
+            })
         },
         setDate: function (date) {
             this.form.date = date
@@ -207,6 +252,15 @@ export default {
         },
         setFiles: function (uploadedFile) {
             this.form.files.push(uploadedFile.id)
+        },
+        removeFile: function (removedFile) {
+            let idx = this.form.files.findIndex(file => file == removedFile)
+            if (idx > -1) {
+                let cache = Object.assign([], this.form.files)
+                cache.splice(idx, 1)
+                console.log('cahce', idx, cache);
+            }
+
         },
         checkForImages: async function (Obj) {
             let buf
@@ -293,7 +347,7 @@ export default {
             for (let key in this.form) {
                 if (this.form.hasOwnProperty(key)) {
                     if (key == 'files') {
-                        data.append(key, JSON.stringify(this.form[key]))
+                        data.append('attacched', JSON.stringify(this.form[key]))
                     }
                     else {
                         data.append(key, this.form[key])

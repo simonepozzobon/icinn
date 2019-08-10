@@ -3,11 +3,12 @@
     <div class="article-uploads__files">
         <div
             class="article-uploads__single"
-            v-for="file in files"
+            v-for="(file, i) in files"
             :key="file.uuid"
         >
             <files-container
                 :file-obj="file"
+                :delay="i"
                 @update="updateFileObj"
                 @remove="removeFileObj"
                 @show-btn="showBtn"
@@ -41,6 +42,14 @@ export default {
     components: {
         FilesContainer,
     },
+    props: {
+        initial: {
+            type: Array,
+            default: function () {
+                return []
+            },
+        },
+    },
     data: function () {
         return {
             files: [],
@@ -52,6 +61,9 @@ export default {
             if (files.length > 0) {
                 this.hasBtn = false
             }
+        },
+        initial: function (arr) {
+            this.files = arr
         },
     },
     methods: {
@@ -90,14 +102,12 @@ export default {
                     src: src,
                 }
                 this.files.splice(idx, 1, newFile)
-                if (newFile) {
-
-                }
             }
         },
         removeFileObj: function (uuid) {
             let idx = this.files.findIndex(file => file.uuid === uuid)
             if (idx > -1) {
+                this.$emit('removed', this.files[idx].id)
                 this.files.splice(idx, 1)
 
                 if (this.files.length == 0) {

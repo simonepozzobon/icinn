@@ -3,6 +3,7 @@
     <a-file-input
         ref="input"
         class="file-container__input"
+        accept="application/pdf"
         @update="update"
     />
     <div
@@ -62,6 +63,10 @@ export default {
                 return {}
             },
         },
+        delay: {
+            type: Number,
+            default: 0,
+        },
     },
     data: function () {
         return {
@@ -83,9 +88,14 @@ export default {
     },
     computed: {
         filename: function () {
-            if (this.fileObj.file) {
+            if (!this.isEdit && this.fileObj.file) {
                 return this.fileObj.file.name
             }
+
+            if (this.isEdit) {
+                return this.fileObj.title
+            }
+
             return null
         },
         progress: function () {
@@ -94,6 +104,12 @@ export default {
         percent: function () {
             return this.progressValue + '%'
         },
+        isEdit: function () {
+            if (this.fileObj && this.fileObj.hasOwnProperty('url') || this.fileObj.hasOwnProperty('id')) {
+                return true
+            }
+            return false
+        }
     },
     methods: {
         update: function (file, src) {
@@ -102,6 +118,11 @@ export default {
                 this.$nextTick(() => {
                     this.upload(file)
                 })
+            }
+        },
+        setInitial: function () {
+            if (this.fileObj && this.fileObj.src && this.isEdit) {
+                this.hideLoader(true)
             }
         },
         remove: function () {
@@ -144,7 +165,7 @@ export default {
                 master.play()
             })
         },
-        hideLoader: function () {
+        hideLoader: function (onlyPreview = false) {
             let scale = 2
             let invscale = 1 / scale
             let baseEase = Power4.easeInOut
@@ -159,48 +180,59 @@ export default {
                 yoyo: true,
             })
 
-            master.addLabel('start', '+=0')
+            if (!onlyPreview) {
+                master.addLabel('start', '+=0')
 
-            master.fromTo(loader, .5, {
-                autoAlpha: 1,
-                css: {
-                    marginBottom: '1rem',
-                },
-            }, {
-                autoAlpha: 0,
-                css: {
-                    marginBottom: '0',
-                },
-                ease: ExpoScaleEase.config(invscale, 1, baseEase),
-            }, 'start')
+                master.fromTo(loader, .5, {
+                    autoAlpha: 1,
+                    css: {
+                        marginBottom: '1rem',
+                    },
+                }, {
+                    autoAlpha: 0,
+                    css: {
+                        marginBottom: '0',
+                    },
+                    ease: ExpoScaleEase.config(invscale, 1, baseEase),
+                }, 'start')
 
-            master.fromTo(progress, .6, {
-                css: {
-                    height: '1.618rem',
-                },
-            }, {
-                css: {
-                    height: 0,
-                },
-                ease: ExpoScaleEase.config(invscale, 1, baseEase),
-            }, 'start')
+                master.fromTo(progress, .6, {
+                    css: {
+                        height: '1.618rem',
+                    },
+                }, {
+                    css: {
+                        height: 0,
+                    },
+                    ease: ExpoScaleEase.config(invscale, 1, baseEase),
+                }, 'start')
 
-            master.addLabel('loader', '+=0')
+                master.addLabel('loader', '+=0')
 
-            master.fromTo(input, .4, {
-                transformOrigin: 'right',
-                autoAlpha: 1,
-                scaleY: 1,
-                scaleX: 1,
-                x: 0,
-            }, {
-                transformOrigin: 'right',
-                autoAlpha: 0,
-                scaleY: .6,
-                scaleX: .8,
-                x: 30,
-                ease: ExpoScaleEase.config(scale, 1, baseEase),
-            }, 'loader')
+                master.fromTo(input, .4, {
+                    transformOrigin: 'right',
+                    autoAlpha: 1,
+                    scaleY: 1,
+                    scaleX: 1,
+                    x: 0,
+                }, {
+                    transformOrigin: 'right',
+                    autoAlpha: 0,
+                    scaleY: .6,
+                    scaleX: .8,
+                    x: 30,
+                    ease: ExpoScaleEase.config(scale, 1, baseEase),
+                }, 'loader')
+            }
+            else {
+                master.set(input, {
+                    transformOrigin: 'right',
+                    autoAlpha: 0,
+                    scaleY: .6,
+                    scaleX: .8,
+                    x: 30,
+                })
+            }
 
             master.fromTo(preview, .7, {
                 autoAlpha: 0,
@@ -222,7 +254,15 @@ export default {
             })
 
             this.$nextTick(() => {
-                master.play()
+                if (onlyPreview) {
+                    let delay = this.delay * 100
+                    setTimeout(() => {
+                        master.play()
+                    }, delay)
+                }
+                else {
+                    master.play()
+                }
             })
         },
         showLoader: function () {
@@ -312,6 +352,9 @@ export default {
         // setTimeout(() => {
         //     this.showLoader()
         // }, 2000)
+        this.$nextTick(() => {
+            this.setInitial()
+        })
     },
 }
 </script>
