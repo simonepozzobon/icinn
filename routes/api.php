@@ -17,6 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('articles')->group(function() {
+    Route::get('/', 'ArticleController@get_articles');
+});
+
 Route::prefix('admin')->group(function() {
     Route::prefix('files')->group(function() {
         Route::post('upload', 'Admin\UploadController@upload_file');

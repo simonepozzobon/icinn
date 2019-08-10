@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/admin/{slug?}', function ($slug = null) {
+    return view('admin');
+})->where('slug', '[\/\w\.-]*');
+
 Route::get('/{slug?}', function ($slug = null) {
     return view('welcome');
 })->where('slug', '[\/\w\.-]*');

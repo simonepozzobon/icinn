@@ -22,6 +22,7 @@ const router = new VueRouter({
     mode: 'history',
     dir: __dirname,
     routes: Routes,
+    base: '/admin',
 })
 
 const admin = new Vue({
