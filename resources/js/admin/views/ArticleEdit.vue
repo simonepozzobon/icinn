@@ -60,6 +60,19 @@
             />
 
             <a-panel-title
+                title="Autore"
+                color="lightest-gray"
+                font-weight="300"
+                :has-margin="false"
+                :has-padding="false"
+            />
+            <a-input
+                placeholder="Autore"
+                :initial="initial.author"
+                @update="setAuthor"
+            />
+
+            <a-panel-title
                 title="Contenuto"
                 color="lightest-gray"
                 font-weight="300"
@@ -121,6 +134,7 @@ export default {
         return {
             initial: {
                 title: null,
+                author: null,
                 date: null,
                 content: null,
                 files: [],
@@ -128,6 +142,7 @@ export default {
             form: {
                 date: null,
                 title: null,
+                author: null,
                 content: null,
                 files: [],
             },
@@ -245,6 +260,9 @@ export default {
         },
         setTitle: function (title) {
             this.form.title = title
+        },
+        setAuthor: function (author) {
+            this.form.author = author
         },
         setContent: function (json, html) {
             this.form.content = html

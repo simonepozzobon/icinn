@@ -55,6 +55,7 @@ class ArticleController extends Controller
         $date_formatted = Carbon::createFromFormat('D M d Y H:i:s e+', $request->date)->format('Y-m-d');
         $article->date = $date_formatted;
         $article->title = $request->title;
+        $article->author = $request->author;
         $article->content = $request->content;
         $article->save();
 
