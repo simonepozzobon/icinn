@@ -21,8 +21,8 @@ require('laravel-mix-purgecss')
 mix
     .sass('resources/scss/admin.scss', 'public/css/admin.css')
     .js('resources/js/admin/app.js', 'public/js/admin.js')
-    .sass('resources/scss/app.scss', 'public/css/app.css')
     .js('resources/js/app.js', 'public/js/app.js')
+    .sass('resources/scss/app.scss', 'public/css/app.css')
     // .extract(['jquery', 'tether', 'bootstrap'])
     // .autoload({
     //     jquery: ['$', 'jQuery', 'jquery'],

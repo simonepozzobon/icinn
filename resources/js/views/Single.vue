@@ -115,6 +115,16 @@ export default {
         img {
             max-width: 100%;
         }
+
+        a {
+            color: $white !important;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: darken($white, 10) !important;
+            text-decoration: underline;
+        }
     }
 
     &__downloads {
