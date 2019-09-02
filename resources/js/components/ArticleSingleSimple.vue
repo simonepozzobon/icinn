@@ -11,13 +11,15 @@
                 </h2>
             </div>
             <div class="article-simple__description">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                est
-                laborum.
+                {{ shortDescription }}
             </div>
             <div class="article-simple__link">
-                <button class="btn btn-outline-white">Read more</button>
+                <button
+                    class="btn btn-outline-white"
+                    @click.prevent="readMore"
+                >
+                    Read more
+                </button>
             </div>
         </div>
     </div>
@@ -26,9 +28,10 @@
 </template>
 
 <script>
-import SmallDivider from './SmallDivider.vue'
-
+const clipper = require('text-clipper')
 import moment from 'moment'
+import SmallDivider from './SmallDivider.vue'
+import stripHtml from 'string-strip-html'
 
 export default {
     name: 'ArticlesListSimple',
@@ -49,6 +52,23 @@ export default {
                 return moment(this.item.date).format('Do MMMM YYYY')
             }
             return null
+        },
+        shortDescription: function () {
+            if (this.item && this.item.content) {
+                let short = clipper(this.item.content, 400, {
+                    html: true,
+                    imageWeight: 0,
+                })
+                return stripHtml(short)
+            }
+            return null
+        }
+    },
+    methods: {
+        readMore: function () {
+            this.$root.goToWithParams('single', {
+                id: this.item.id
+            })
         },
     },
 }

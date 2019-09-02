@@ -1,24 +1,20 @@
 <template>
 <div class="icinn">
-    <articles-list-simple :articles="articles">
-    </articles-list-simple>
-    <!-- <div class="footer-nav">
-        <a
-            href="#"
-            class="footer-nav__link btn btn-link"
-            @click.prevent="$root.goTo('archive')"
-        >
-            Archive
-        </a>
-    </div> -->
+    <div class="art-divider container">
+        <art-divider />
+    </div>
+    <articles-list-simple :articles="articles" />
 </div>
 </template>
 
 <script>
+import ArtDivider from '../components/ArtDivider.vue'
 import ArticlesListSimple from '../components/ArticlesListSimple.vue'
+
 export default {
     name: 'Home',
     components: {
+        ArtDivider,
         ArticlesListSimple,
     },
     data: function () {
@@ -36,9 +32,6 @@ export default {
     created: function () {
         this.getData()
     },
-    mounted: function () {
-        console.log('cioa');
-    },
 }
 </script>
 
@@ -47,6 +40,10 @@ export default {
 
 .icinn {
     background-color: $primary;
+}
+
+.art-divider {
+    padding-top: $spacer * 4;
 }
 
 .footer-nav {

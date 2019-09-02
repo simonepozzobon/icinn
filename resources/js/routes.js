@@ -1,5 +1,5 @@
-import Archive from './views/Archive.vue'
 import Home from './views/Home.vue'
+import Single from './views/Single.vue'
 
 const Routes = [
     {
@@ -8,9 +8,9 @@ const Routes = [
         component: Home,
     },
     {
-        path: '/archive',
-        name: 'archive',
-        component: Archive,
+        path: '/single/:id',
+        name: 'single',
+        component: Single,
     }
 ]
 
