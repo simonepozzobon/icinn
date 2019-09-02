@@ -424,7 +424,7 @@ h6,
 .h5,
 .h6 {
   margin-bottom: 0.5rem;
-  font-family: inherit;
+  font-family: "Circular Std", Helvetica, Arial, "Helvetica Neue", "Lucida Grande", sans-serif;
   font-weight: 700;
   line-height: 1.2;
   color: inherit;
