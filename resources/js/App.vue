@@ -9,8 +9,7 @@
             />
         </div>
     </div>
-    <articles-list>
-    </articles-list>
+    <router-view />
     <footer class="bg-blue text-white pb-5 w-100">
         <div class="container bg-blue">
             <div class="row no-gutters bg-blue">
@@ -29,13 +28,8 @@
 </template>
 
 <script>
-import ArticlesList from './components/ArticlesList.vue'
-
 export default {
     name: 'App',
-    components: {
-        ArticlesList,
-    },
 }
 </script>
 

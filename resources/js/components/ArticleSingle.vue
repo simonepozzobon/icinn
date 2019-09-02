@@ -69,7 +69,7 @@ export default {
         }
     },
     mounted: function () {
-        // console.log(this.files);
+        console.log(this.files);
     },
 }
 </script>

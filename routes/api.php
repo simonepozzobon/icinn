@@ -13,28 +13,42 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get(
+    '/user', function (Request $request) {
+        return $request->user();
+    }
+);
 
-Route::prefix('articles')->group(function() {
-    Route::get('/', 'ArticleController@get_articles');
-});
+Route::prefix('articles')->group(
+    function () {
+        Route::get('/', 'ArticleController@get_articles');
+        Route::get('/{id}', 'ArticleController@get_article');
+        Route::get('archives', 'ArticleController@get_archives');
+    }
+);
 
-Route::prefix('admin')->group(function() {
-    Route::prefix('files')->group(function() {
-        Route::post('upload', 'Admin\UploadController@upload_file');
-        Route::post('update', 'Admin\UploadController@save_to_db');
-    });
+Route::prefix('admin')->group(
+    function () {
+        Route::prefix('files')->group(
+            function () {
+                Route::post('upload', 'Admin\UploadController@upload_file');
+                Route::post('update', 'Admin\UploadController@save_to_db');
+            }
+        );
 
-    Route::prefix('images')->group(function() {
-        Route::post('upload', 'Admin\UploadController@upload_image');
-    });
+        Route::prefix('images')->group(
+            function () {
+                Route::post('upload', 'Admin\UploadController@upload_image');
+            }
+        );
 
-    Route::prefix('articles')->group(function() {
-        Route::get('/', 'Admin\ArticleController@get_articles');
-        Route::get('/{id}', 'Admin\ArticleController@get_article');
-        Route::delete('/{id}', 'Admin\ArticleController@destroy_article');
-        Route::post('update', 'Admin\ArticleController@update');
-    });
-});
+        Route::prefix('articles')->group(
+            function () {
+                Route::get('/', 'Admin\ArticleController@get_articles');
+                Route::get('/{id}', 'Admin\ArticleController@get_article');
+                Route::delete('/{id}', 'Admin\ArticleController@destroy_article');
+                Route::post('update', 'Admin\ArticleController@update');
+            }
+        );
+    }
+);

@@ -26,7 +26,7 @@ export default {
     methods: {
         download: function () {
             if (this.url) {
-                alert('download')
+                window.open(this.url, '_blank')
             }
         },
     },

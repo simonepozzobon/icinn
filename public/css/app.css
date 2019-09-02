@@ -7,6 +7,27 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+@font-face {
+  font-family: "Circular Std";
+  src: url("/fonts/CircularStd-Medium.woff2") format("woff2"), url("/fonts/CircularStd-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Circular Std";
+  src: url("/fonts/CircularStd-Book.woff2") format("woff2"), url("/fonts/CircularStd-Book.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Circular Std";
+  src: url("/fonts/CircularStd-Bold.woff2") format("woff2"), url("/fonts/CircularStd-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
 :root {
   --blue: #212d74;
   --indigo: #6610f2;
@@ -47,7 +68,7 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: Helvetica, Arial, "Helvetica Neue", "Lucida Grande", sans-serif;
+  --font-family-sans-serif: "Circular Std", Helvetica, Arial, "Helvetica Neue", "Lucida Grande", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -85,7 +106,7 @@ section {
 
 body {
   margin: 0;
-  font-family: Helvetica, Arial, "Helvetica Neue", "Lucida Grande", sans-serif;
+  font-family: "Circular Std", Helvetica, Arial, "Helvetica Neue", "Lucida Grande", sans-serif;
   font-size: 1rem;
   font-weight: 700;
   line-height: 2;
@@ -7460,7 +7481,7 @@ button.close {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: Helvetica, Arial, "Helvetica Neue", "Lucida Grande", sans-serif;
+  font-family: "Circular Std", Helvetica, Arial, "Helvetica Neue", "Lucida Grande", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 2;
@@ -7585,7 +7606,7 @@ button.close {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: Helvetica, Arial, "Helvetica Neue", "Lucida Grande", sans-serif;
+  font-family: "Circular Std", Helvetica, Arial, "Helvetica Neue", "Lucida Grande", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 2;
