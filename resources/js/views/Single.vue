@@ -77,7 +77,6 @@ export default {
             if (this.articleID != 0) {
                 let url = '/api/articles/' + this.articleID
                 this.$http.get(url).then(response => {
-                    console.log(response.data);
                     this.article = response.data.article
                     this.isLoading = false
                 })
