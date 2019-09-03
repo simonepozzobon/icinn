@@ -3,7 +3,7 @@
     <div class="row no-gutters p-4">
         <div class="col d-flex justify-content-center">
             <img
-                src="images/logo.svg"
+                src="/images/logo.svg"
                 alt="Istituto per la Cultura e l'Innovazione"
                 class="custom-img"
             />
