@@ -6,9 +6,15 @@
         </div>
         <div class="article-simple__details">
             <div class="article-simple__title">
-                <h2>
-                    {{ item.title }}
-                </h2>
+                <a
+                    href="#"
+                    class="article-simple__title-link"
+                    @click.prevent="readMore"
+                >
+                    <h2>
+                        {{ item.title }}
+                    </h2>
+                </a>
             </div>
             <div class="article-simple__description">
                 {{ shortDescription }}
@@ -109,6 +115,15 @@ export default {
         max-width: 60%;
         display: flex;
         flex-direction: column;
+    }
+
+    &__title-link {
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+            color: $white;
+        }
     }
 
     &__title {
