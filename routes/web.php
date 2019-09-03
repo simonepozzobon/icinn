@@ -11,6 +11,20 @@
 |
 */
 
+// Route::get('link-storage', function() {
+//     $exitCode = Artisan::call('storage:link');
+//     echo "storage linked";
+//     dump($exitCode);
+//
+//     $cache = Artisan::call('cache:clear');
+//     echo "cache cleared";
+//     dump($cache);
+//
+//     $config = Artisan::call('config:clear');
+//     echo "config clear";
+//     dump($config);
+// });
+
 Route::get('/admin/{slug?}', function ($slug = null) {
     return view('admin');
 })->where('slug', '[\/\w\.-]*');
