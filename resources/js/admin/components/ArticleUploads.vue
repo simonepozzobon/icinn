@@ -107,6 +107,7 @@ export default {
         removeFileObj: function (uuid) {
             let idx = this.files.findIndex(file => file.uuid === uuid)
             if (idx > -1) {
+                console.log(idx);
                 this.$emit('removed', this.files[idx].id)
                 this.files.splice(idx, 1)
 

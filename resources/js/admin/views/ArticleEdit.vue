@@ -276,7 +276,8 @@ export default {
             if (idx > -1) {
                 let cache = Object.assign([], this.form.files)
                 cache.splice(idx, 1)
-                console.log('cahce', idx, cache);
+                this.form.files = cache
+                // console.log('cahce', idx, cache);
             }
 
         },
