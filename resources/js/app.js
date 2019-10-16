@@ -7,7 +7,6 @@ import BootstrapVue from 'bootstrap-vue'
 import * as AdminUi from '@esserun/admin-ui/packages/admin-ui'
 import '@esserun/admin-ui/dist/index.css'
 
-
 for (let componentName in AdminUi) {
     Vue.component(componentName, AdminUi[componentName])
 }
@@ -55,4 +54,4 @@ const admin = new Vue({
     },
     mounted: function () {},
     render: h => h(App)
-}).$mount('#dio')
+}).$mount('#app')

@@ -55,7 +55,7 @@ export default {
     computed: {
         dataFormatted: function () {
             if (this.item && this.item.date) {
-                return moment(this.item.date).format('Do MMMM YYYY')
+                return moment(this.item.date).format('Do MMM YYYY')
             }
             return null
         },
@@ -95,6 +95,15 @@ export default {
         display: flex;
         color: $white;
         padding-bottom: $spacer * 4;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        @include media-breakpoint-up('sm') {
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
     }
 
     &__divider {
@@ -103,18 +112,26 @@ export default {
     }
 
     &__date {
-        flex: 1 1 25%;
-        max-width: 25%;
         font-size: $h3-font-size;
         font-weight: $headings-font-weight;
         padding-right: $spacer;
+        margin-bottom: $spacer;
+
+        @include media-breakpoint-up('sm') {
+            flex: 1 1 25%;
+            max-width: 25%;
+            margin-bottom: 0;
+        };
     }
 
     &__details {
-        flex: 1 1 60%;
-        max-width: 60%;
         display: flex;
         flex-direction: column;
+
+        @include media-breakpoint-up('sm') {
+            flex: 1 1 60%;
+            max-width: 60%;
+        };
     }
 
     &__title-link {
@@ -136,10 +153,14 @@ export default {
 
     &__link {
         margin-top: $spacer * 1.618;
-        // width: 100%;
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @include media-breakpoint-up('sm') {
+            justify-content: flex-start;
+        };
     }
 }
 </style>
