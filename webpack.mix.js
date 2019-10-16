@@ -1,8 +1,18 @@
+// const mix = require('laravel-mix');
+// const section = process.env.SECTION
+//
+// if (section) {
+//     require(path.resolve(__dirname) + `/webpack.${section}.mix.js`)
+// }
+
 const mix = require('laravel-mix')
 require('laravel-mix-purgecss')
 
 mix
-    .sass('_dev/scss/app.scss', 'css')
+    .js('resources/js/app.js', 'public/js/app.js')
+    .sass('resources/scss/app.scss', 'public/css/app.css')
+    .sass('resources/scss/admin.scss', 'public/css/admin.css')
+    .js('resources/js/admin/app.js', 'public/js/admin.js')
     // .extract(['jquery', 'tether', 'bootstrap'])
     // .autoload({
     //     jquery: ['$', 'jQuery', 'jquery'],
@@ -12,7 +22,7 @@ mix
         globs: [
             path.join(__dirname, 'index.html'),
         ],
-        folders: ['_dev'],
+        folders: ['src'],
         extensions: ['html']
     })
     .browserSync({
@@ -20,16 +30,17 @@ mix
         browser: 'google chrome',
         port: 3013,
         files: [
-            'css/{*,**/*}.css',
+            'resources/{*,**/*}.*',
+            'public/{*,**/*}.*',
+            'app/{*,**/*}.*',
             'index.html',
-            'istituto.html'
         ]
     })
     .webpackConfig(webpack => {
         return {
             resolve: {
                 alias: {
-                    'styles': path.resolve(__dirname, 'resources/sass'),
+                    'styles': path.resolve(__dirname, 'resources/scss'),
                     '_js': path.resolve(__dirname, 'resources/js'),
                     'node_modules': path.resolve(__dirname, 'node_modules'),
                 }

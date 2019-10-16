@@ -1,0 +1,72 @@
+@mixin box-shadows($color) {
+  box-shadow: 0px 8px 40px 0 rgba($color, .33);
+}
+
+@mixin drop-shadows($color) {
+  filter: drop-shadow(0px 8px 40px rgba($color, 1));
+}
+
+@mixin text-shadow($color) {
+  text-shadow: 1px 1px 2px rgba($color, .03), 1px 2px 4px rgba($color, .05);
+}
+
+@mixin heading-shadow($color) {
+  text-shadow: 2px 3px 0px rgba(lighten(saturate(adjust-hue($color, -220), 13.69), 56.08), 1);
+}
+
+@mixin box-shadow-inset($color) {
+  box-shadow: inset 0px 0px ($spacer * 2) rgba($color, .1);
+}
+
+@mixin box-shadows-size($color, $x, $y, $blur, $stop) {
+  box-shadow: $x $y $blur $stop $color;
+}
+
+@mixin border-bottom-gradient($size, $start, $stop) {
+    border-bottom: $size solid;
+    border-image-source: linear-gradient(to right, $start, $stop);
+    border-image-slice: 1;
+}
+
+@mixin border-gradient($size, $start, $stop) {
+    border: $size solid;
+    border-image-source: linear-gradient(to right, $start, $stop);
+    border-image-slice: 1;
+}
+
+@mixin border-gradient-radius($size, $radius, $start, $stop) {
+    display: flex;
+    align-items: center;
+    margin: auto;
+
+    position: relative;
+    box-sizing: border-box;
+
+    background-color: white;
+    background-clip: padding-box;
+
+    border: solid $size transparent; /* !importanté */
+    border-radius: $radius;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: -1;
+        margin: -$size;
+        border-radius: inherit; /* !importanté */
+        background: linear-gradient(to right, $start, $stop);
+    }
+}
+
+@mixin border-bottom-gradient-three($size, $start, $stop, $percent, $end) {
+    border-bottom: $size solid;
+    border-image-source: linear-gradient(to right, $start, $stop $percent, $end);
+    border-image-slice: 1;
+}
+
+@mixin border-gradient-three($size, $start, $stop, $percent, $end) {
+    border: $size solid;
+    border-image-source: linear-gradient(to right, $start, $stop $percent, $end);
+    border-image-slice: 1;
+}

@@ -1,0 +1,44 @@
+
+.ui-icon {
+    $self: &;
+
+    &__path {
+        transition: $transition-base;
+    }
+
+    &#{$self}--cyan &__path {
+        fill: $cyan;
+    }
+
+    &#{$self}--white &__path {
+        fill: $white;
+    }
+
+    &#{$self}--red &__path {
+        fill: $red;
+    }
+
+    &#{$self}--pointer {
+        cursor: pointer;
+    }
+
+    &#{$self}--hoverable:hover#{&}--hover-primary &__path {
+        transition: $transition-base;
+        fill: $primary;
+    }
+
+    &#{$self}--hoverable:hover#{&}--hover-yellow &__path {
+        transition: $transition-base;
+        fill: $yellow;
+    }
+
+    &#{$self}--hoverable:hover#{&}--hover-black &__path {
+        transition: $transition-base;
+        fill: $black;
+    }
+
+    &#{$self}--hoverable:hover#{&}--hover-red &__path {
+        transition: $transition-base;
+        fill: $red;
+    }
+}
