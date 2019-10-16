@@ -4,6 +4,15 @@
         <art-divider />
     </div>
     <articles-list-simple :articles="articles" />
+
+    <div class="icinn__archive">
+        <button
+            class="btn btn-outline-white"
+            @click.prevent="goToArchive"
+        >
+            Archive
+        </button>
+    </div>
 </div>
 </template>
 
@@ -28,6 +37,9 @@ export default {
                 this.articles = response.data.articles
             })
         },
+        goToArchive: function () {
+            this.$root.goTo('archive')
+        }
     },
     created: function () {
         this.getData()
@@ -40,6 +52,14 @@ export default {
 
 .icinn {
     background-color: $primary;
+
+    &__archive {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: $spacer * 1.618;
+    }
 }
 
 .art-divider {

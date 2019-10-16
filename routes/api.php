@@ -22,8 +22,8 @@ Route::middleware('auth:api')->get(
 Route::prefix('articles')->group(
     function () {
         Route::get('/', 'ArticleController@get_articles');
+        Route::get('/archives', 'ArticleController@get_archives');
         Route::get('/{id}', 'ArticleController@get_article');
-        Route::get('archives', 'ArticleController@get_archives');
     }
 );
 
