@@ -30,6 +30,7 @@
                     size="sm"
                     color="secondary"
                     :has-margin="false"
+                    @click="undo"
                 />
             </div>
         </div>
@@ -112,6 +113,7 @@
                 size="sm"
                 color="secondary"
                 :has-margin="false"
+                @click="undo"
             />
         </div>
     </a-container>
@@ -386,6 +388,9 @@ export default {
                     this.isSaving = false
                 })
             })
+        },
+        undo: function () {
+            this.$root.goTo('articoli')
         },
     },
     created: function () {
