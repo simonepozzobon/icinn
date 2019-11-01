@@ -339,6 +339,7 @@ export default {
 
             request.onload = () => {
                 let response = request.response
+                // console.log('risposta', response);
                 if (response.success) {
                     this.progressValue = 100
                     this.$emit('show-btn')
