@@ -203,9 +203,11 @@ export default {
                         ...this.form,
                         ...article
                     }
+
+                    console.log(this.form.files);
                 }
 
-                this.debug()
+                // this.debug()
             }).catch(err => {
                 this.$root.goTo('articoli')
             })
@@ -274,7 +276,7 @@ export default {
             this.form.files.push(uploadedFile.id)
         },
         removeFile: function (removedFile) {
-            let idx = this.form.files.findIndex(file => file == removedFile)
+            let idx = this.form.files.findIndex(file => file.id == removedFile)
             if (idx > -1) {
                 let cache = Object.assign([], this.form.files)
                 cache.splice(idx, 1)

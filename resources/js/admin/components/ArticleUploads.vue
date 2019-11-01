@@ -78,6 +78,7 @@ export default {
         },
         addFile: function () {
             let uuid = Utility.uuid()
+            console.log('adding file', uuid);
             this.files.push({
                 uuid: uuid,
                 file: null,
