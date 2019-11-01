@@ -31,10 +31,7 @@
             :per-page="perPage"
             @filtered="onFiltered"
         >
-            <template
-                slot="tools"
-                slot-scope="data"
-            >
+            <template v-slot:cell(tools)="data">
                 <div class="admin-table-tools">
                     <a-button
                         class="admin-table-tool"

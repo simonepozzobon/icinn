@@ -10,7 +10,7 @@ class ArticleController extends Controller
 {
     public function get_articles()
     {
-        $articles = Article::orderBy('date', 'desc')->with('files')->get();
+        $articles = Article::orderBy('date', 'desc')->with('files')->limit(5)->get();
 
         $articles = $articles->transform(
             function ($article, $key) {
@@ -33,7 +33,7 @@ class ArticleController extends Controller
 
     public function get_archives()
     {
-        $articles = Article::with('files')->get();
+        $articles = Article::orderBy('date', 'desc')->with('files')->get();
 
         $articles = $articles->transform(
             function ($article, $key) {

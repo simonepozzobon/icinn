@@ -1,40 +1,38 @@
 const mix = require('laravel-mix')
 require('laravel-mix-purgecss')
-
-// const mix = require('laravel-mix');
-//
-// /*
-//  |--------------------------------------------------------------------------
-//  | Mix Asset Management
-//  |--------------------------------------------------------------------------
-//  |
-//  | Mix provides a clean, fluent API for defining some Webpack build steps
-//  | for your Laravel application. By default, we are compiling the Sass
-//  | file for the application as well as bundling up all the JS files.
-//  |
-//  */
-//
-// mix.js('resources/js/app.js', 'public/js')
-//     .sass('resources/sass/app.scss', 'public/css');
-
+require('laravel-mix-polyfill')
 
 mix
-    .sass('resources/scss/admin.scss', 'public/css/admin.css')
-    .js('resources/js/admin/app.js', 'public/js/admin.js')
-    // .extract(['jquery', 'tether', 'bootstrap'])
+    .setPublicPath(path.normalize('public/backend'))
+    .options({
+        processCssUrls: false
+    })
+    .sass('resources/scss/admin.scss', 'admin.css')
+    .js('resources/js/admin/app.js', 'admin.js')
+    .extract([
+        'jquery',
+        'bootstrap',
+        'bootstrap-vue',
+        'moment',
+        'string-strip-html',
+        'mime-types',
+        'text-clipper',
+        'gsap'
+    ])
     // .autoload({
     //     jquery: ['$', 'jQuery', 'jquery'],
     //     tether: ['Tether'],
     // })
-    .purgeCss({
-        globs: [
-            path.join(__dirname, 'index.html'),
-        ],
-        folders: ['src'],
-        extensions: ['html']
+    .purgeCss()
+    .polyfill({
+        enabled: false,
+        useBuiltIns: 'usage',
+        targets: 'last 2 version, not dead',
+        debug: true
     })
     .browserSync({
         proxy: 'http://icinn.test',
+        startPath: '/admin',
         browser: 'google chrome',
         port: 3013,
         files: [
