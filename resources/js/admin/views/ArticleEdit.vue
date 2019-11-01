@@ -203,9 +203,11 @@ export default {
                         ...this.form,
                         ...article
                     }
+
+                    console.log(this.form.files);
                 }
 
-                this.debug()
+                // this.debug()
             }).catch(err => {
                 this.$root.goTo('articoli')
             })
@@ -271,10 +273,10 @@ export default {
             this.json = json
         },
         setFiles: function (uploadedFile) {
-            this.form.files.push(uploadedFile.id)
+            this.form.files.push(uploadedFile)
         },
         removeFile: function (removedFile) {
-            let idx = this.form.files.findIndex(file => file == removedFile)
+            let idx = this.form.files.findIndex(file => file.id == removedFile)
             if (idx > -1) {
                 let cache = Object.assign([], this.form.files)
                 cache.splice(idx, 1)
@@ -368,7 +370,10 @@ export default {
             for (let key in this.form) {
                 if (this.form.hasOwnProperty(key)) {
                     if (key == 'files') {
-                        data.append('attacched', JSON.stringify(this.form[key]))
+                        let fileIds = this.form[key].map(file => {
+                            return file.id
+                        })
+                        data.append('attacched', JSON.stringify(fileIds))
                     }
                     else {
                         data.append(key, this.form[key])
@@ -377,7 +382,6 @@ export default {
             }
 
             this.$http.post('/api/admin/articles/update', data).then(response => {
-                console.log(response.data);
                 this.$root.objectsLoaded++
                 this.$nextTick(() => {
                     this.isSaving = false

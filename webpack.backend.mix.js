@@ -25,13 +25,14 @@ mix
     // })
     .purgeCss()
     .polyfill({
-        enabled: true,
+        enabled: false,
         useBuiltIns: 'usage',
         targets: 'last 2 version, not dead',
         debug: true
     })
     .browserSync({
         proxy: 'http://icinn.test',
+        startPath: '/admin',
         browser: 'google chrome',
         port: 3013,
         files: [
