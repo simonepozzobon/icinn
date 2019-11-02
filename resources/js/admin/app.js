@@ -5,7 +5,6 @@ import App from './App.vue'
 import Routes from './routes'
 import BootstrapVue from 'bootstrap-vue'
 import AdminUi from '@esserun/admin-ui'
-import '@esserun/admin-ui/dist/adminUi.css'
 import Cookie from './Cookies'
 
 // for (let componentName in AdminUi) {

@@ -34,7 +34,7 @@
             <template v-slot:cell(tools)="data">
                 <div class="admin-table-tools">
                     <a-button
-                        class="admin-table-tool"
+                        class="admin-table-tool mr-2"
                         title="Modifica"
                         theme="outline"
                         size="sm"
@@ -154,8 +154,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import '~styles/admin-shared';
+<style lang="scss">
+@import '~styles/shared';
 
 .admin-top-bar {
     display: flex;

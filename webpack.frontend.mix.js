@@ -21,7 +21,7 @@ mix
     // })
     .purgeCss()
     .polyfill({
-        enabled: false,
+        enabled: true,
         useBuiltIns: 'usage',
         targets: 'last 2 version, not dead',
         debug: true
