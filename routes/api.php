@@ -14,10 +14,15 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get(
-    '/user', function (Request $request) {
+    '/user',
+    function (Request $request) {
         return $request->user();
     }
 );
+
+Route::post('login', 'Admin\AuthController@attempt_login');
+Route::post('get-token', 'Admin\AuthController@attempt_login_from_cookie');
+Route::get('logout', 'Admin\AuthController@attempt_logout')->middleware('auth:api');
 
 Route::prefix('articles')->group(
     function () {

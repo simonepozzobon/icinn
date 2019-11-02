@@ -407,7 +407,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import '~styles/admin-shared';
 
 .article-panel {
     &__top {
@@ -434,7 +434,7 @@ export default {
 </style>
 
 <style lang="scss">
-@import '~styles/shared';
+@import '~styles/admin-shared';
 .article-text-editor {
     p {
         font-size: $font-size-base !important;

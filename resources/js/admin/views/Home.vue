@@ -34,7 +34,7 @@
             <template v-slot:cell(tools)="data">
                 <div class="admin-table-tools">
                     <a-button
-                        class="admin-table-tool"
+                        class="admin-table-tool mr-2"
                         title="Modifica"
                         theme="outline"
                         size="sm"
