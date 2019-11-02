@@ -57,15 +57,14 @@ export default {
             data.append('password', this.password)
 
             this.$http.post('/api/login', data).then(response => {
-                console.log('attempt login', response);
+                // console.log('attempt login', response);
                 if (response.data.success) {
                     this.$root.user = response.data.user
                     this.$root.token = response.data.token
-                    this.$root.login()
-                    this.$root.goTo('articoli')
+                    this.$root.login(true)
                 }
                 else {
-                    console.log('error login');
+                    // console.log('error login');
                 }
             })
         },
@@ -74,7 +73,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~styles/shared';
+@import '~styles/admin-shared';
 
 .login {
     display: flex;

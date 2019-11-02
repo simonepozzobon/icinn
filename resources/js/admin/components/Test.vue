@@ -88,8 +88,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~styles/shared';
-// @import './sass/shared';
+@import '~styles/admin-shared';
+// @import './sass/admin-shared';
 
 .a-datepicker {
     &__wrapper {

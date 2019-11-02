@@ -154,8 +154,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '~styles/shared';
+<style lang="scss" scoped>
+@import '~styles/admin-shared';
 
 .admin-top-bar {
     display: flex;

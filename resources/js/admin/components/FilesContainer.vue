@@ -361,7 +361,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~styles/shared';
+@import '~styles/admin-shared';
 
 .file-container {
     position: relative;

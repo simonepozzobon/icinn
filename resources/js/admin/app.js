@@ -4,13 +4,16 @@ import axios from 'axios'
 import App from './App.vue'
 import Routes from './routes'
 import BootstrapVue from 'bootstrap-vue'
-import * as AdminUi from '@esserun/admin-ui/packages/admin-ui'
-import '@esserun/admin-ui/dist/index.css'
+import AdminUi from '@esserun/admin-ui'
+import '@esserun/admin-ui/dist/adminUi.css'
 import Cookie from './Cookies'
 
-for (let componentName in AdminUi) {
+// for (let componentName in AdminUi) {
+//     Vue.component(componentName, AdminUi[componentName])
+// }
+Object.keys(AdminUi).forEach(componentName => {
     Vue.component(componentName, AdminUi[componentName])
-}
+})
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -26,6 +29,12 @@ const router = new VueRouter({
     base: '/admin',
 })
 
+const redirectLogin = (app) => {
+    app.$nextTick(() => {
+        app.goTo('login')
+    })
+}
+
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         const app = router.app
@@ -34,7 +43,7 @@ router.beforeEach((to, from, next) => {
 
         if ((user && token)) {
             // Procedi
-            console.log('procedi');
+            // console.log('procedi');
             next()
         }
         else if (typeof user == 'undefined' || typeof token == 'undefined') {
@@ -58,7 +67,7 @@ router.beforeEach((to, from, next) => {
                         app.$cookie.set('icinn-token', JSON.stringify(app.token))
                         app.$http.defaults.headers.common.Authorization = `${app.token.token_type} ${app.token.access_token}`
 
-                        console.log('procedi dopo riautenticazione');
+                        // console.log('procedi dopo riautenticazione');
                         next()
                     }
                     else {
@@ -67,26 +76,25 @@ router.beforeEach((to, from, next) => {
                         app.$cookie.destroy('icinn-token')
                         delete app.$http.defaults.headers.common.Authorization
 
-                        console.log('autenticazione cookies non riuscita');
-                        router.push({
-                            name: 'login'
-                        })
+                        // console.log('autenticazione cookies non riuscita');
+                        redirectLogin(app)
                     }
                 })
             }
             else {
-                console.log('user e headers non ci sono nei cookies ->headers', user, auth);
-                router.push({
-                    name: 'login'
-                })
+                // console.log('user e headers non ci sono nei cookies ->headers', app);
+                if (app) {
+                    redirectLogin(app)
+                }
+                else {
+                    console.log('router', router);
+                }
                 return false
             }
         }
         else {
-            console.log('user e token non esistono');
-            router.push({
-                name: 'login'
-            })
+            // console.log('user e token non esistono', app);
+            redirectLogin(app)
             return false
         }
     }
@@ -157,9 +165,11 @@ const admin = new Vue({
             this.goTo('login')
         },
         goTo: function (name) {
-            this.$router.push({
-                name: name
-            })
+            if (this.$route.name != name) {
+                this.$router.push({
+                    name: name
+                })
+            }
         },
         goToWithParams: function (name, params) {
             if (this.$route.name != name) {

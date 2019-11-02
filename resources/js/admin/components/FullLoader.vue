@@ -104,7 +104,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~styles/shared';
+@import '~styles/admin-shared';
 
 .loader-nav {
     position: fixed;
