@@ -4,12 +4,11 @@ import axios from 'axios'
 import App from './App.vue'
 import Routes from './routes'
 import BootstrapVue from 'bootstrap-vue'
-import * as AdminUi from '@esserun/admin-ui/packages/admin-ui'
-import '@esserun/admin-ui/dist/index.css'
+import AdminUi from '@esserun/admin-ui'
 
-for (let componentName in AdminUi) {
+Object.keys(AdminUi).forEach(componentName => {
     Vue.component(componentName, AdminUi[componentName])
-}
+})
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
