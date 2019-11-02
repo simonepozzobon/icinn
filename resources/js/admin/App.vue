@@ -1,8 +1,9 @@
 <template>
 <div id="app">
-    <!-- <full-loader v-if="$root.objectsToLoad > 0" /> -->
-    <!-- <full-loader /> -->
-    <classic-layout ref="layout">
+    <classic-layout
+        ref="layout"
+        v-if="$root.logged"
+    >
         <template slot="logo">
             Pannello di amministrazione
         </template>
@@ -13,6 +14,7 @@
                 :has-container="false"
                 :has-margin="false"
                 color="dark"
+                @click="$root.logout"
             />
         </template>
         <template slot="sidebar">
@@ -27,6 +29,9 @@
             </div>
         </template>
     </classic-layout>
+    <div v-else>
+        <router-view />
+    </div>
 </div>
 </template>
 
